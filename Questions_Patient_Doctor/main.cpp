@@ -57,6 +57,7 @@ void main(){
 			
 				system("cls");
 				cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
+				
 				getch(); break;
 
 		}

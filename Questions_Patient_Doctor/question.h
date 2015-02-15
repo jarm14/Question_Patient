@@ -14,6 +14,7 @@ class question{
 		int id_patient;
 		char date[18];
 		char patient_id[32];
+		char text[1024];
 		char context[2048];
 		char answer[2048];
 		char comment[2048];
@@ -79,9 +80,22 @@ class question{
 			return cont;
 		}
 
-		void setAnswer(){
+		void setText(){
 		
 			cout<<"\nIngrese la pregunta: ";
+			fflush(stdin);
+			gets(text);
+		}
+
+		char *getText(){
+		
+			char *tex=text;
+			return tex;
+		}
+
+		void setAnswer(){
+		
+			cout<<"\nIngrese la respuesta: ";
 			fflush(stdin);
 			gets(answer);
 		}
