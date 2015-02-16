@@ -5,6 +5,8 @@
 #include <time.h>
 #include <string.h>
 
+using namespace std;
+
 char *current_date();
 int entero();
 
@@ -70,7 +72,8 @@ void main(){
 				question newQuestion;
 				system("cls");
 				cout<<"\t\t============PREGUNTA NUEVA============";
-				
+				cout<<"\n\nIngrese el contexto de pregunta: ";
+				cout<<"\n\nIngrese la pregunta: ";
 				
 				getch(); break;
 
@@ -103,6 +106,7 @@ void main(){
 						cin>>(id);
 						questions=bd.getQuestion();
 						flag=0;
+						i=0;
 
 						for(i=0;i<count;i++){//comprueba el id del usuario
 	
@@ -118,9 +122,8 @@ void main(){
 		
 							cout<<"ID incorrecto";
 							getch();
-							cout<<"\r\r";
 						}
-					}while(flag=0);
+					}while(flag==0);
 
 					do{
 					
