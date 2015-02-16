@@ -4,7 +4,7 @@
 #include <sql.h>
 #include <sqlext.h>
 #include <conio.h>
-//#include "question.h"
+
 
 using namespace std;
 
@@ -16,7 +16,7 @@ class test{
 		SQLCHAR message[1024];
 		if(SQL_SUCCESS == SQLGetDiagRec(handletype, handle, 1, sqlstate, NULL, message, 1024, NULL)){}
 			cout<<"Alerta: "<<message<<"\nSQLSTATE: "<<sqlstate<<endl;
-			getch();
+			//getch();
 	}
 
 public:
@@ -29,12 +29,28 @@ public:
 				_question.setIdQuestion(3);
 				_question.setIdDoctor(1);
 				_question.setIdPatient(1);
-				_question.setDate("18/02/2015 0:00:00");
+				_question.setDate("2015-02-16 18:25:08");
 				_question.setText("Is this a test?");
-				_question.setContext("I'm testing the application");
+				_question.setContext("I am testing the application");
 				//_question.setAnswer("");
 				//_question.setComment("");
-			
+		char buffer[100] = {0};
+		string idQuestion = itoa(_question.getIdQuestion(),buffer,10);
+		string idDoctor = itoa(_question.getIdDoctor(),buffer,10);
+		string idPatient = itoa(_question.getIdPatient(),buffer,10);
+		string SQLStmt = "INSERT INTO question([id], [doctor_id], [patient_id], [date], [text], [context]) VALUES ('";
+		SQLStmt += idQuestion; 
+		SQLStmt += "','";
+		SQLStmt += idDoctor;
+		SQLStmt += "','";
+		SQLStmt += idPatient;
+		SQLStmt += "',convert(datetime2,'";
+		SQLStmt += _question.getDate();
+		SQLStmt += "',20),'";
+		SQLStmt += _question.getText();
+		SQLStmt += "','";
+		SQLStmt += _question.getContext();
+		SQLStmt += "')";
 
 		SQLHANDLE sqlenvhandle;    
 		SQLHANDLE sqlconnectionhandle;
@@ -73,14 +89,8 @@ public:
 		if(SQL_SUCCESS!=SQLAllocHandle(SQL_HANDLE_STMT, sqlconnectionhandle, &sqlstatementhandle))
 			goto FINISHED;
 
-		//testing
-		
-		std::string SQLStmt = "INSERT INTO question([id], [doctor_id], [patient_id], [date], [text], [context]) VALUES ('"+_question.getIdQuestion();
-		SQLStmt += "','";
-
-		
-
-		if(SQL_SUCCESS!=SQLExecDirect(sqlstatementhandle, SQLStmt.c_str(), SQL_NTS)){
+		//Here
+		if(SQL_SUCCESS!=SQLExecDirect(sqlstatementhandle, (SQLTCHAR *)SQLStmt.c_str(), SQL_NTS)){
 			show_error(SQL_HANDLE_STMT, sqlstatementhandle);
 			goto FINISHED;
 		}

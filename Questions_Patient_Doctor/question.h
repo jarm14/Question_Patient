@@ -12,13 +12,24 @@ class question{
 		int id_question;
 		int id_doctor;
 		int id_patient;
-		char date[18];
-		char text[1024];
-		char context[2048];
-		char answer[2048];
-		char comment[2048];
+		char *date;
+		char *text;
+		char *context;
+		char *answer;
+		char *comment;
 
 	public:
+
+		question(){
+			id_question = 0;
+			id_doctor = 0;
+			id_patient = 0;
+			date = new char[22];
+			text = new char[1024];
+			context = new char[2048];
+			answer = new char[2048];
+			comment = new char[2048];
+		}
 
 		void setIdQuestion(int id){
 		
@@ -50,15 +61,12 @@ class question{
 			return id_patient;
 		}
 
-		void setDate(char dat[18]){
-		
+		void setDate(char dat[22]){
 			strcpy(date,dat);
 		}
 
 		char *getDate(){
-		
-			char *dat=date;
-			return dat;
+			return date;
 		}
 
 		void setContext(char cont[2048]){
@@ -67,9 +75,7 @@ class question{
 		}
 
 		char *getContext(){
-		
-			char *cont=context;
-			return cont;
+			return context;
 		}
 
 		void setText(char tex[1024]){
@@ -78,9 +84,7 @@ class question{
 		}
 
 		char *getText(){
-		
-			char *tex=text;
-			return tex;
+			return text;
 		}
 
 		void setAnswer(char answ[2048]){
@@ -89,9 +93,7 @@ class question{
 		}
 
 		char *getAnswer(){
-		
-			char *answ=answer;
-			return answ;
+			return answer;
 		}
 
 		void setComment(char comm[2048]){
@@ -100,8 +102,6 @@ class question{
 		}
 
 		char *getComent(){
-		
-			char *comm=comment;
-			return comm;
+			return comment;
 		}
 };

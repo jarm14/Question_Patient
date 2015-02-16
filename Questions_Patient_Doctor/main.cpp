@@ -19,6 +19,11 @@ void main(){
 	int id,count;
 
 	do{
+		//testing
+		//current_date();
+		test aux;
+		aux.newQuestion();
+		//end testing
 		connexion bd;
 		count=bd.getCountPatient();
 		patients=bd.getPatient();
@@ -70,7 +75,6 @@ void main(){
 		switch(op){
 			case '1'://peticion del ingreso de preguntas
 
-				question newQuestion;
 				system("cls");
 				cout<<"\t\t============PREGUNTA NUEVA============";
 				cout<<"\n\nIngrese el contexto de pregunta: ";
@@ -149,15 +153,15 @@ void main(){
 
 char *current_date(){
 	
-	char dat[18];
+	char dat[22];
+	char buf[22];
 	time_t now = time(0);// para ingresar el dia y hora actual
 	struct tm  tstruct;
-	char buf[18];
 	tstruct = *localtime(&now);
-	strftime(buf, sizeof(buf), "%x %X", &tstruct);//formato deseado
+	strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &tstruct);//formato deseado
 	strcpy(dat,buf);
-	char *cur_date=dat;
-	return cur_date;
+	//char *cur_date=dat;
+	return dat;
 }
 
 int entero()
