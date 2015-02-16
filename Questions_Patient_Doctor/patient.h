@@ -26,11 +26,9 @@ class patient{
 		
 		}
 
-		void setName(){
+		void setName(char nam[512]){
 			
-			cout<<"\nIngrese su Nombre: ";
-			fflush(stdin);
-			gets(name);
+			strcpy(name,nam);
 		}
 
 		char *getName(){
@@ -40,11 +38,9 @@ class patient{
 		
 		}
 
-		void setSurName(){
+		void setSurName(char sur[512]){
 		
-			cout<<"\nIngrese su Apellido Paterno: ";
-			fflush(stdin);
-			gets(surName);
+			strcpy(surName,sur);
 		}
 
 		char *getSurName(){
@@ -54,11 +50,9 @@ class patient{
 		
 		}
 
-		void setEmail(){
+		void setEmail(char ema[320]){
 		
-			cout<<"\nIngrese su Email: ";
-			fflush(stdin);
-			gets(email);
+			strcpy(email,ema);
 		}
 
 		char *getEmail(){

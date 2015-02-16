@@ -51,14 +51,9 @@ class question{
 			return id_patient;
 		}
 
-		void setDate(){
+		void setDate(char dat[18]){
 		
-			time_t now = time(0);// para ingresar el dia y hora actual
-			struct tm  tstruct;
-			char buf[80];
-			tstruct = *localtime(&now);
-			strftime(buf, sizeof(buf), "%Y/%m/%d %X", &tstruct);//formato deseado
-			strcpy(date,buf);
+			strcpy(date,dat);
 		}
 
 		char *getDate(){
@@ -67,11 +62,9 @@ class question{
 			return dat;
 		}
 
-		void setContext(){
+		void setContext(char cont[2048]){
 		
-			cout<<"\nIngrese el contexto de la pregunta: ";
-			fflush(stdin);
-			gets(context);
+			strcpy(context,cont);
 		}
 
 		char *getContext(){
@@ -80,11 +73,9 @@ class question{
 			return cont;
 		}
 
-		void setText(){
+		void setText(char tex[1024]){
 		
-			cout<<"\nIngrese la pregunta: ";
-			fflush(stdin);
-			gets(text);
+			strcpy(text,tex);
 		}
 
 		char *getText(){
@@ -93,11 +84,9 @@ class question{
 			return tex;
 		}
 
-		void setAnswer(){
+		void setAnswer(char answ[2048]){
 		
-			cout<<"\nIngrese la respuesta: ";
-			fflush(stdin);
-			gets(answer);
+			strcpy(answer,answ);
 		}
 
 		char *getAnswer(){
@@ -106,11 +95,9 @@ class question{
 			return answ;
 		}
 
-		void setComment(){
+		void setComment(char comm[2048]){
 		
-			cout<<"\nIngrese un comentario: ";
-			fflush(stdin);
-			gets(comment);
+			strcpy(comment,comm);
 		}
 
 		char *getComent(){

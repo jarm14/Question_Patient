@@ -7,6 +7,7 @@ void main(){
 
 	int flag,i=1;//declaracion de variables
 	char op;
+	char date[18];
 	question question;
 	doctor doctor;
 	patient patient;
@@ -38,7 +39,7 @@ void main(){
 				system("cls");
 				cout<<"\t\t============PREGUNTA NUEVA============";
 				
-				patient.setName();
+				/*patient.setName();
 				patient.setSurName();
 				patient.setEmail();
 				patient.setId(i);
@@ -47,8 +48,8 @@ void main(){
 				question.setIdPatient(patient.getId());
 				question.setIdDoctor(doctor.getId_doctor());
 				question.setContext();
-				question.setAnswer();
-				question.setDate();
+				question.setText();
+				question.setDate();*/
 				
 				i++;
 				getch(); break;
@@ -57,7 +58,9 @@ void main(){
 			
 				system("cls");
 				cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
-				
+				cout<<"ID\tTexto de la pregunta";
+				cout<<question.getIdQuestion()<<"\t"<<question.getText();
+
 				getch(); break;
 
 		}
