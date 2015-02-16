@@ -63,11 +63,8 @@ class question{
 			return id_patient;
 		}
 
-<<<<<<< HEAD
 		void setDate(char dat[22]){
-=======
-		void setDate(char dat[18]){
->>>>>>> origin/master
+
 			strcpy(date,dat);
 		}
 

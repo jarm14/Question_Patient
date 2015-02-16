@@ -22,8 +22,8 @@ void main(){
 	do{
 		//testing
 		//current_date();
-		test aux;
-		aux.newQuestion();
+		//test aux;
+		//aux.newQuestion();
 		//end testing
 		connexion bd;
 		count=bd.getCountPatient();
