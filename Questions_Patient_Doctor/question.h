@@ -8,7 +8,7 @@ using namespace std;
 class question{
 
 	private:
-		
+
 		int id_question;
 		int id_doctor;
 		int id_patient;
@@ -21,6 +21,7 @@ class question{
 	public:
 
 		question(){
+
 			id_question = 0;
 			id_doctor = 0;
 			id_patient = 0;
@@ -29,39 +30,44 @@ class question{
 			context = new char[2048];
 			answer = new char[2048];
 			comment = new char[2048];
+
 		}
 
 		void setIdQuestion(int id){
-		
+
 			id_question = id;
 		}
 
 		int getIdQuestion(){
-		
+
 			return id_question;
 		}
 
 		void setIdDoctor(int id){
-		
+
 			id_doctor = id;
 		}
 
 		int getIdDoctor(){
-		
+
 			return id_doctor;
 		}
 
 		void setIdPatient(int id){
-		
+
 			id_patient = id;
 		}
 
 		int getIdPatient(){
-		
+
 			return id_patient;
 		}
 
+<<<<<<< HEAD
 		void setDate(char dat[22]){
+=======
+		void setDate(char dat[18]){
+>>>>>>> origin/master
 			strcpy(date,dat);
 		}
 
@@ -70,7 +76,7 @@ class question{
 		}
 
 		void setContext(char cont[2048]){
-		
+
 			strcpy(context,cont);
 		}
 
@@ -79,7 +85,7 @@ class question{
 		}
 
 		void setText(char tex[1024]){
-		
+
 			strcpy(text,tex);
 		}
 
@@ -88,7 +94,7 @@ class question{
 		}
 
 		void setAnswer(char answ[2048]){
-		
+
 			strcpy(answer,answ);
 		}
 
@@ -97,7 +103,7 @@ class question{
 		}
 
 		void setComment(char comm[2048]){
-		
+
 			strcpy(comment,comm);
 		}
 

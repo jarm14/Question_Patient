@@ -14,9 +14,10 @@ int entero();
 void main(){
 
 	int i,flag;//declaracion de variables
-	char op,date[18],patientName[512],patientSurName[512],email[320],text[1024],context[2048];
+	char op,date[18],text[1024],context[2048];
 	patient *patients;
 	int id,count;
+	question _question;
 
 	do{
 		//testing
@@ -74,12 +75,24 @@ void main(){
 
 		switch(op){
 			case '1'://peticion del ingreso de preguntas
-
 				system("cls");
 				cout<<"\t\t============PREGUNTA NUEVA============";
 				cout<<"\n\nIngrese el contexto de pregunta: ";
-				cout<<"\n\nIngrese la pregunta: ";
-				
+				fflush(stdin);
+				gets(context);
+				cout<<"\nIngrese la pregunta: ";
+				fflush(stdin);
+				gets(text);
+				_question.setContext(context);
+				strcpy(date,current_date());
+				_question.setDate(date);
+				_question.setIdDoctor(1);
+				_question.setIdPatient(patients->getId());
+				_question.setText(text);
+				connexion bd;
+				int count;
+				count=bd.getCount();
+				_question.setIdQuestion((count+1));
 				getch(); break;
 
 			case '2'://impresion de preguntas
@@ -99,7 +112,7 @@ void main(){
 						
 						char answer[2048]="";
 					
-						if(strcmp(answer,questions->getAnswer())!=0){
+						if((strcmp(answer,questions->getAnswer())!=0) && (patients->getId()==questions->getIdPatient())){
 					
 							cout<<"\n\n"<<questions->getIdQuestion()<<"\t"<<questions->getText();
 						}
