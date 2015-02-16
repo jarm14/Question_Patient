@@ -81,6 +81,7 @@
     <ClInclude Include="doctor.h" />
     <ClInclude Include="patient.h" />
     <ClInclude Include="question.h" />
+    <ClInclude Include="test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
