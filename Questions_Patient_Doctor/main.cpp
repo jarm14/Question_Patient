@@ -1,6 +1,7 @@
 #include "doctor.h"
 #include "patient.h"
 #include "question.h"
+#include "conexion_db.h"
 #include <time.h>
 
 void main(){
@@ -55,11 +56,12 @@ void main(){
 				getch(); break;
 
 			case '2'://impresion de preguntas
-			
+				connexion bd;
+				question = bd.getQuestion();
 				system("cls");
 				cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
 				cout<<"ID\tTexto de la pregunta";
-				cout<<question.getIdQuestion()<<"\t"<<question.getText();
+				//cout<<question.getIdQuestion()<<"\t"<<question.getText();
 
 				getch(); break;
 

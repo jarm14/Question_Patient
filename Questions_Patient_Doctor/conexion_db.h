@@ -4,21 +4,23 @@
 #include <sql.h>
 #include <sqlext.h>
 #include <conio.h>
+#include "question.h"
 
 using namespace std;
 
-class conection{
+class connexion{
 	
 	
 	void show_error(unsigned int handletype, const SQLHANDLE& handle){
 		SQLCHAR sqlstate[1024];
 		SQLCHAR message[1024];
 		if(SQL_SUCCESS == SQLGetDiagRec(handletype, handle, 1, sqlstate, NULL, message, 1024, NULL))
-			cout<<"Message: "<<message<<"\nSQLSTATE: "<<sqlstate<<endl;
+			cout<<"Alerta: "<<message<<"\nSQLSTATE: "<<sqlstate<<endl;
 	}
 
-	int main(){
-
+public:
+	question getQuestion(){
+		question _question;
 		SQLHANDLE sqlenvhandle;    
 		SQLHANDLE sqlconnectionhandle;
 		SQLHANDLE sqlstatementhandle;
@@ -36,7 +38,7 @@ class conection{
 		SQLCHAR retconstring[1024];
 		switch(SQLDriverConnect (sqlconnectionhandle, 
 					NULL, 
-					(SQLCHAR*)"DRIVER={SQL Server};SERVER=tp47icyluv.database.windows.net,1433;DATABASE=rad;UID=rad;PWD=Admin112358.;", 
+					(SQLCHAR*)"DRIVER={SQL Server};SERVER=ogt4jiumex.database.windows.net,1433;DATABASE=espe;UID=espe;PWD=Admin112358.;", 
 					SQL_NTS, 
 					retconstring, 
 					1024, 
@@ -61,16 +63,34 @@ class conection{
 			goto FINISHED;
 		}
 		else{
-			char name[64];
-			char address[64];
-			int id;
-			while(SQLFetch(sqlstatementhandle)==SQL_SUCCESS){
-				SQLGetData(sqlstatementhandle, 1, SQL_C_ULONG, &id, 0, NULL);
-				SQLGetData(sqlstatementhandle, 2, SQL_C_CHAR, name, 64, NULL);
-				SQLGetData(sqlstatementhandle, 3, SQL_C_CHAR, address, 64, NULL);
-				cout<<id<<" "<<name<<" "<<address<<endl;
+			int id_question;
+			int id_doctor;
+			int id_patient;
+			char date[18];
+			char text[1024];
+			char context[2048];
+			char answer[2048];
+			char comment[2048];
+			while(SQLFetch(sqlstatementhandle)==SQL_SUCCESS){//Fetch datos de base de datos
+				SQLGetData(sqlstatementhandle, 1, SQL_C_ULONG, &id_question, 0, NULL);
+				SQLGetData(sqlstatementhandle, 2, SQL_C_ULONG, &id_doctor, 0, NULL);
+				SQLGetData(sqlstatementhandle, 3, SQL_C_ULONG, &id_patient, 0, NULL);
+				SQLGetData(sqlstatementhandle, 4, SQL_C_CHAR, date, 18, NULL);
+				SQLGetData(sqlstatementhandle, 5, SQL_C_CHAR, text, 1024, NULL);
+				SQLGetData(sqlstatementhandle, 6, SQL_C_CHAR, context, 2048, NULL);
+				SQLGetData(sqlstatementhandle, 7, SQL_C_CHAR, answer, 2048, NULL);
+				SQLGetData(sqlstatementhandle, 8, SQL_C_CHAR, comment, 2048, NULL);
+				
+				//Guardar datos en objeto
+				_question.setIdQuestion(id_question);
+				_question.setIdDoctor(id_doctor);
+				_question.setIdPatient(id_patient);
+				_question.setDate(date);
+				_question.setText(text);
+				_question.setContext(context);
+				_question.setAnswer(answer);
+				_question.setComment(comment);
 			}
-			getch();
 		}
 
 	FINISHED:
@@ -78,7 +98,6 @@ class conection{
 		SQLDisconnect(sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_DBC, sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_ENV, sqlenvhandle);
-    
+		return _question;
 	}
-
 };

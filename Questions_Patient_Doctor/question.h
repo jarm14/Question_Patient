@@ -13,7 +13,6 @@ class question{
 		int id_doctor;
 		int id_patient;
 		char date[18];
-		char patient_id[32];
 		char text[1024];
 		char context[2048];
 		char answer[2048];
