@@ -3,15 +3,46 @@
 #include "question.h"
 #include "conexion_db.h"
 #include <time.h>
+#include <string.h>
 
 char *current_date();
+int entero();
 
 void main(){
 
-	int flag,i=1;//declaracion de variables
+	int i,flag;//declaracion de variables
 	char op,date[18],patientName[512],patientSurName[512],email[320],text[1024],context[2048];
-	doctor doctor;
-	patient patient;
+	patient *patients;
+	int id,count;
+
+	do{
+		connexion bd;
+		count=bd.getCountPatient();
+		patients=bd.getPatient();
+		flag=0;
+		system("cls");
+		cout<<"\t\t============BINEVENIDO AL SISTEMA DE PACIENTES============";
+		cout<<"\n\nPorfavor ingresa tu ID: ";
+		cin>>(id);
+
+		for(i=0;i<count;i++){//comprueba el id del usuario
+	
+			if(id==patients->getId()){
+		
+				flag=1;
+				i=count;
+				patients--;
+			}
+			patients++;
+		}
+		if(flag==0){
+		
+			cout<<"ID incorrecto";
+			getch();
+		}
+
+	}while(flag==0);
+
 
 	do{//creacion del menu
 		
@@ -19,7 +50,7 @@ void main(){
 			
 			system("cls");
 	
-			cout<<"\t\t============PACIENTE============";
+			cout<<"\t\t============BIENVENIDO " <<patients->getName()<<"============";
 			cout<<"\n1.- Crear Pregunta";
 			cout<<"\n2.- Ver Preguntas";
 			cout<<"\n0.- Salir";
@@ -40,51 +71,71 @@ void main(){
 				system("cls");
 				cout<<"\t\t============PREGUNTA NUEVA============";
 				
-				cout<<"\nIngrese su nombre: ";
-				fflush(stdin);
-				gets(patientName);
-				patient.setName(patientName);
-				cout<<"Ingrese su apellido paterno: ";
-				fflush(stdin);
-				gets(patientSurName);
-				patient.setSurName(patientSurName);
-				cout<<"Ingrese su email: ";
-				fflush(stdin);
-				gets(email);
-				patient.setEmail(email);
-				patient.setId(i);
-				doctor.setId_doctor(1);
-				newQuestion.setIdQuestion(i);
-				newQuestion.setIdPatient(patient.getId());
-				newQuestion.setIdDoctor(doctor.getId_doctor());
-				cout<<"Ingrese el contexto de la pregunta: ";
-				fflush(stdin);
-				gets(context);
-				newQuestion.setContext(context);
-				cout<<"Ingrese su pregunta: ";
-				fflush(stdin);
-				gets(text);
-				newQuestion.setText(text);
-				strcpy(date,current_date());
-				newQuestion.setDate(date);
 				
-				i++;
 				getch(); break;
 
 			case '2'://impresion de preguntas
-				connexion bd;
-				int count;
-				count=bd.getCount();
-				question *questions;
-				questions = bd.getQuestion();
-				system("cls");
-				cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
-				cout<<"\nID\tTexto de la pregunta";
-				for(i=0;i<count;i++){
+				char cOp;
+				do{
+					connexion bd;
+					int count;
+					int id;
+					count=bd.getCount();
+					question *questions;
+					questions=bd.getQuestion();
+					system("cls");
+					cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
+					cout<<"\nID\tTexto de la pregunta";
 					
-					cout<<"\n\n"<<questions[i].getIdQuestion()<<"\t"<<questions[i].getText()<<"\t"<<questions[i].getAnswer();
-				}
-				getch(); break;
+					for(i=0;i<count;i++){
+						
+						char answer[2048]="";
+					
+						if(strcmp(answer,questions->getAnswer())!=0){
+					
+							cout<<"\n\n"<<questions->getIdQuestion()<<"\t"<<questions->getText();
+						}
+						questions++;
+					}
+				
+					do{
+						cout<<"\n\n Escoge el ID de una pregunta: ";
+						cin>>(id);
+						questions=bd.getQuestion();
+						flag=0;
+
+						for(i=0;i<count;i++){//comprueba el id del usuario
+	
+							if(id==questions->getIdQuestion()){
+		
+								flag=1;
+								i=count;
+								questions--;
+							}
+							questions++;
+						}
+						if(flag==0){
+		
+							cout<<"ID incorrecto";
+							getch();
+							cout<<"\r\r";
+						}
+					}while(flag=0);
+
+					do{
+					
+						system("cls");
+						cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
+						cout<<"\n\nLa pregunta fue: "<<questions->getText();
+						cout<<"\nLa respuesta es: "<<questions->getAnswer();
+						cout<<"\nDesea ver otra pregunta (s/n): ";
+						cin>>(cOp);
+
+					}while(cOp!='n' && cOp!='s');
+
+				}while(cOp!='n');
+				
+				break;
 
 		}
 
@@ -105,4 +156,30 @@ char *current_date(){
 	return cur_date;
 }
 
+int entero()
+{
+	char *pass = new char[10];
+	int conta = 0;
+	int i = 0, punto = 0, acm = 0;
+	while (pass[i] != 13 || i<1)
+	{
+		pass[i] = _getch();
+		if ((pass[i]>32 && i<20) && (pass[i] >= 48 && pass[i] <= 57))
+		{
+			printf_s("%c", pass[i]);
+			i++;
+		}
+		else if (pass[i] == 8 && i>0)
+		{
+			putchar(8);
+			putchar(' ');
+			putchar(8);
+			i--;
+		}
+	}
+	pass[i] = '\0';
+	int entero = atoi(pass);
+	return entero;
+
+}
 
