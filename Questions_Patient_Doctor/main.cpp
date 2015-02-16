@@ -75,7 +75,8 @@ void main(){
 
 			case '2'://impresion de preguntas
 				connexion bd;
-				question = bd.getQuestion();
+				//question = bd.getQuestion();
+				 bd.getQuestion();
 				system("cls");
 				cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
 				cout<<"ID\tTexto de la pregunta";

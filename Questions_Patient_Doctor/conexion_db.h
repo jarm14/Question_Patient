@@ -4,7 +4,7 @@
 #include <sql.h>
 #include <sqlext.h>
 #include <conio.h>
-#include "question.h"
+//#include "question.h"
 
 using namespace std;
 
@@ -16,10 +16,11 @@ class connexion{
 		SQLCHAR message[1024];
 		if(SQL_SUCCESS == SQLGetDiagRec(handletype, handle, 1, sqlstate, NULL, message, 1024, NULL))
 			cout<<"Alerta: "<<message<<"\nSQLSTATE: "<<sqlstate<<endl;
+		getch();
 	}
 
 public:
-	question getQuestion(){
+	void getQuestion(){
 		question _question;
 		SQLHANDLE sqlenvhandle;    
 		SQLHANDLE sqlconnectionhandle;
@@ -38,7 +39,7 @@ public:
 		SQLCHAR retconstring[1024];
 		switch(SQLDriverConnect (sqlconnectionhandle, 
 					NULL, 
-					(SQLCHAR*)"DRIVER={SQL Server};SERVER=ogt4jiumex.database.windows.net,1433;DATABASE=espe;UID=espe;PWD=Admin112358.;", 
+					(SQLCHAR*)"Driver={SQL Server Native Client 10.0};Server=tcp:ogt4jiumex.database.windows.net,1433;Database=espe;Uid=espe@ogt4jiumex;Pwd={Admin112358.};Encrypt=yes;Connection Timeout=30;", 
 					SQL_NTS, 
 					retconstring, 
 					1024, 
@@ -90,6 +91,7 @@ public:
 				_question.setContext(context);
 				_question.setAnswer(answer);
 				_question.setComment(comment);
+				getch();
 			}
 		}
 
@@ -98,6 +100,6 @@ public:
 		SQLDisconnect(sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_DBC, sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_ENV, sqlenvhandle);
-		return _question;
+		//return _question;
 	}
 };
