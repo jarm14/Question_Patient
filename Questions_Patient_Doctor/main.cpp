@@ -2,6 +2,7 @@
 #include "patient.h"
 #include "question.h"
 #include "conexion_db.h"
+#include "test.h"
 #include <time.h>
 #include <string.h>
 
