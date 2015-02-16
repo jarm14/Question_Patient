@@ -16,11 +16,10 @@ class connexion{
 		SQLCHAR message[1024];
 		if(SQL_SUCCESS == SQLGetDiagRec(handletype, handle, 1, sqlstate, NULL, message, 1024, NULL))
 			cout<<"Alerta: "<<message<<"\nSQLSTATE: "<<sqlstate<<endl;
-		getch();
 	}
 
 public:
-	void getQuestion(){
+	question getQuestion(){
 		question _question;
 		SQLHANDLE sqlenvhandle;    
 		SQLHANDLE sqlconnectionhandle;
@@ -91,7 +90,7 @@ public:
 				_question.setContext(context);
 				_question.setAnswer(answer);
 				_question.setComment(comment);
-				getch();
+				
 			}
 		}
 
@@ -100,6 +99,6 @@ public:
 		SQLDisconnect(sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_DBC, sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_ENV, sqlenvhandle);
-		//return _question;
+		return _question;
 	}
 };

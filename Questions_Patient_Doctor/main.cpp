@@ -10,7 +10,6 @@ void main(){
 
 	int flag,i=1;//declaracion de variables
 	char op,date[18],patientName[512],patientSurName[512],email[320],text[1024],context[2048];
-	question question;
 	doctor doctor;
 	patient patient;
 	
@@ -38,7 +37,7 @@ void main(){
 		switch(op){
 			case '1'://peticion del ingreso de preguntas
 
-				
+				question newQuestion;
 				system("cls");
 				cout<<"\t\t============PREGUNTA NUEVA============";
 				
@@ -56,31 +55,32 @@ void main(){
 				patient.setEmail(email);
 				patient.setId(i);
 				doctor.setId_doctor(1);
-				question.setIdQuestion(i);
-				question.setIdPatient(patient.getId());
-				question.setIdDoctor(doctor.getId_doctor());
+				newQuestion.setIdQuestion(i);
+				newQuestion.setIdPatient(patient.getId());
+				newQuestion.setIdDoctor(doctor.getId_doctor());
 				cout<<"Ingrese el contexto de la pregunta: ";
 				fflush(stdin);
 				gets(context);
-				question.setContext(context);
+				newQuestion.setContext(context);
 				cout<<"Ingrese su pregunta: ";
 				fflush(stdin);
 				gets(text);
-				question.setText(text);
+				newQuestion.setText(text);
 				
-				question.setDate(date);
+				newQuestion.setDate(date);
 				
 				i++;
 				getch(); break;
 
 			case '2'://impresion de preguntas
 				connexion bd;
-				//question = bd.getQuestion();
-				 bd.getQuestion();
+				question questions;
+				questions = bd.getQuestion();
+				
 				system("cls");
 				cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
 				cout<<"ID\tTexto de la pregunta";
-				//cout<<question.getIdQuestion()<<"\t"<<question.getText();
+				cout<<questions.getIdQuestion()<<"\t"<<questions.getText();
 
 				getch(); break;
 
