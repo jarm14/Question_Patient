@@ -20,6 +20,7 @@ class connexion{
 	}
 
 public:
+	
 	void getQuestion(){
 		question _question;
 		SQLHANDLE sqlenvhandle;    
