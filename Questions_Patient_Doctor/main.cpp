@@ -73,13 +73,17 @@ void main(){
 
 			case '2'://impresion de preguntas
 				connexion bd;
+				int count;
+				count=bd.getCount();
 				question *questions;
 				questions = bd.getQuestion();
 				system("cls");
 				cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
 				cout<<"\nID\tTexto de la pregunta";
-				cout<<"\n\n"<<questions[i].getIdQuestion()<<"\t"<<questions[i].getText();
-
+				for(i=0;i<count;i++){
+					
+					cout<<"\n\n"<<questions[i].getIdQuestion()<<"\t"<<questions[i].getText()<<"\t"<<questions[i].getAnswer();
+				}
 				getch(); break;
 
 		}
