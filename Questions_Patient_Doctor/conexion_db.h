@@ -14,15 +14,15 @@ class connexion{
 	void show_error(unsigned int handletype, const SQLHANDLE& handle){
 		SQLCHAR sqlstate[1024];
 		SQLCHAR message[1024];
-		if(SQL_SUCCESS == SQLGetDiagRec(handletype, handle, 1, sqlstate, NULL, message, 1024, NULL))
-			cout<<"Alerta: "<<message<<"\nSQLSTATE: "<<sqlstate<<endl;
-		getch();
+		if(SQL_SUCCESS == SQLGetDiagRec(handletype, handle, 1, sqlstate, NULL, message, 1024, NULL)){}
+			cout<<"Alerta: "<<message<<"\nSQLSTATE: "<<sqlstate<<endl;		
 	}
 
 public:
-	
-	void getQuestion(){
-		question _question;
+
+	question *getQuestion(){
+
+		question *_question;
 		SQLHANDLE sqlenvhandle;    
 		SQLHANDLE sqlconnectionhandle;
 		SQLHANDLE sqlstatementhandle;
@@ -73,6 +73,7 @@ public:
 			char context[2048];
 			char answer[2048];
 			char comment[2048];
+			int cont=0;
 			while(SQLFetch(sqlstatementhandle)==SQL_SUCCESS){//Fetch datos de base de datos
 				SQLGetData(sqlstatementhandle, 1, SQL_C_ULONG, &id_question, 0, NULL);
 				SQLGetData(sqlstatementhandle, 2, SQL_C_ULONG, &id_doctor, 0, NULL);
@@ -82,18 +83,42 @@ public:
 				SQLGetData(sqlstatementhandle, 6, SQL_C_CHAR, context, 2048, NULL);
 				SQLGetData(sqlstatementhandle, 7, SQL_C_CHAR, answer, 2048, NULL);
 				SQLGetData(sqlstatementhandle, 8, SQL_C_CHAR, comment, 2048, NULL);
+				cont++;
 				
-				//Guardar datos en objeto
-				_question.setIdQuestion(id_question);
-				_question.setIdDoctor(id_doctor);
-				_question.setIdPatient(id_patient);
-				_question.setDate(date);
-				_question.setText(text);
-				_question.setContext(context);
-				_question.setAnswer(answer);
-				_question.setComment(comment);
-				getch();
 			}
+
+			_question= new question[cont];
+			int i=0;
+			
+			if(SQL_SUCCESS!=SQLExecDirect(sqlstatementhandle, (SQLCHAR*)"select * from question", SQL_NTS)){
+				show_error(SQL_HANDLE_STMT, sqlstatementhandle);
+				goto FINISHED;
+			}
+			else{
+				
+				while(SQLFetch(sqlstatementhandle)==SQL_SUCCESS){//Fetch datos de base de datos
+					SQLGetData(sqlstatementhandle, 1, SQL_C_ULONG, &id_question, 0, NULL);
+					SQLGetData(sqlstatementhandle, 2, SQL_C_ULONG, &id_doctor, 0, NULL);
+					SQLGetData(sqlstatementhandle, 3, SQL_C_ULONG, &id_patient, 0, NULL);
+					SQLGetData(sqlstatementhandle, 4, SQL_C_CHAR, date, 18, NULL);
+					SQLGetData(sqlstatementhandle, 5, SQL_C_CHAR, text, 1024, NULL);
+					SQLGetData(sqlstatementhandle, 6, SQL_C_CHAR, context, 2048, NULL);
+					SQLGetData(sqlstatementhandle, 7, SQL_C_CHAR, answer, 2048, NULL);
+					SQLGetData(sqlstatementhandle, 8, SQL_C_CHAR, comment, 2048, NULL);
+				
+					//Guardar datos en objeto
+					_question[i].setIdQuestion(id_question);
+					_question[i].setIdDoctor(id_doctor);
+					_question[i].setIdPatient(id_patient);
+					_question[i].setDate(date);
+					_question[i].setText(text);
+					_question[i].setContext(context);
+					_question[i].setAnswer(answer);
+					_question[i].setComment(comment);
+	
+				}
+			}
+		
 		}
 
 	FINISHED:
@@ -101,6 +126,6 @@ public:
 		SQLDisconnect(sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_DBC, sqlconnectionhandle);
 		SQLFreeHandle(SQL_HANDLE_ENV, sqlenvhandle);
-		//return _question;
+		return _question;
 	}
 };
