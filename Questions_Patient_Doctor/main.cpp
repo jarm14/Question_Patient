@@ -4,14 +4,16 @@
 #include "conexion_db.h"
 #include <time.h>
 
+char *current_date();
+
 void main(){
 
 	int flag,i=1;//declaracion de variables
-	char op;
-	char date[18];
+	char op,date[18],patientName[512],patientSurName[512],email[320],text[1024],context[2048];
 	question question;
 	doctor doctor;
 	patient patient;
+	
 	
 	do{//creacion del menu
 		
@@ -40,17 +42,33 @@ void main(){
 				system("cls");
 				cout<<"\t\t============PREGUNTA NUEVA============";
 				
-				/*patient.setName();
-				patient.setSurName();
-				patient.setEmail();
+				cout<<"Ingrese su nombre: ";
+				fflush(stdin);
+				gets(patientName);
+				patient.setName(patientName);
+				cout<<"Ingrese su apellido paterno: ";
+				fflush(stdin);
+				gets(patientSurName);
+				patient.setSurName(patientSurName);
+				cout<<"Ingrese su email: ";
+				fflush(stdin);
+				gets(email);
+				patient.setEmail(email);
 				patient.setId(i);
 				doctor.setId_doctor(1);
 				question.setIdQuestion(i);
 				question.setIdPatient(patient.getId());
 				question.setIdDoctor(doctor.getId_doctor());
-				question.setContext();
-				question.setText();
-				question.setDate();*/
+				cout<<"Ingrese el contexto de la pregunta: ";
+				fflush(stdin);
+				gets(context);
+				question.setContext(context);
+				cout<<"Ingrese su pregunta: ";
+				fflush(stdin);
+				gets(text);
+				question.setText(text);
+				
+				question.setDate(date);
 				
 				i++;
 				getch(); break;
@@ -69,6 +87,20 @@ void main(){
 
 	}while(op);   
 
+}
+
+char *current_date(){
+	
+	char *date;
+	char dat[18];
+	time_t now = time(0);// para ingresar el dia y hora actual
+	struct tm  tstruct;
+	char buf[80];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y/%m/%d %X", &tstruct);//formato deseado
+	strcpy(dat,buf);
+	date=dat;
+	return date;
 }
 
 
