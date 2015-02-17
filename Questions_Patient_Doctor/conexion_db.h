@@ -321,5 +321,86 @@ public:
 		return _patients;
 	}
 
+	void newQuestion(question _question){
+		
+		//Data test
+			/*	question _question;		
+				////Guardar datos en objeto
+				_question.setIdQuestion(3);
+				_question.setIdDoctor(1);
+				_question.setIdPatient(1);
+				_question.setDate("2015-02-16 18:25:08");
+				_question.setText("Is this a test?");
+				_question.setContext("I am testing the application");
+				//_question.setAnswer("");
+				//_question.setComment("");*/
+		char buffer[100] = {0};
+		string idQuestion = itoa(_question.getIdQuestion(),buffer,10);
+		string idDoctor = itoa(_question.getIdDoctor(),buffer,10);
+		string idPatient = itoa(_question.getIdPatient(),buffer,10);
+		string SQLStmt = "INSERT INTO question([id], [doctor_id], [patient_id], [date], [text], [context]) VALUES ('";
+		SQLStmt += idQuestion; 
+		SQLStmt += "','";
+		SQLStmt += idDoctor;
+		SQLStmt += "','";
+		SQLStmt += idPatient;
+		SQLStmt += "',convert(datetime2,'";
+		SQLStmt += _question.getDate();
+		SQLStmt += "',20),'";
+		SQLStmt += _question.getText();
+		SQLStmt += "','";
+		SQLStmt += _question.getContext();
+		SQLStmt += "')";
+
+		SQLHANDLE sqlenvhandle;    
+		SQLHANDLE sqlconnectionhandle;
+		SQLHANDLE sqlstatementhandle;
+		SQLRETURN retcode;
+
+		if(SQL_SUCCESS!=SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &sqlenvhandle))
+			goto FINISHED;
+
+		if(SQL_SUCCESS!=SQLSetEnvAttr(sqlenvhandle,SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3, 0)) 
+			goto FINISHED;
+    
+		if(SQL_SUCCESS!=SQLAllocHandle(SQL_HANDLE_DBC, sqlenvhandle, &sqlconnectionhandle))
+			goto FINISHED;
+
+		SQLCHAR retconstring[1024];
+		switch(SQLDriverConnect (sqlconnectionhandle, 
+					NULL, 
+					(SQLCHAR*)"Driver={SQL Server Native Client 10.0};Server=tcp:ogt4jiumex.database.windows.net,1433;Database=espe;Uid=espe@ogt4jiumex;Pwd={Admin112358.};Encrypt=yes;Connection Timeout=30;", 
+					SQL_NTS, 
+					retconstring, 
+					1024, 
+					NULL,
+					SQL_DRIVER_NOPROMPT)){
+			case SQL_SUCCESS_WITH_INFO:
+				show_error(SQL_HANDLE_DBC, sqlconnectionhandle);
+				break;
+			case SQL_INVALID_HANDLE:
+			case SQL_ERROR:
+				show_error(SQL_HANDLE_DBC, sqlconnectionhandle);
+				goto FINISHED;
+			default:
+				break;
+		}
+    
+		if(SQL_SUCCESS!=SQLAllocHandle(SQL_HANDLE_STMT, sqlconnectionhandle, &sqlstatementhandle))
+			goto FINISHED;
+
+		//Here
+		if(SQL_SUCCESS!=SQLExecDirect(sqlstatementhandle, (SQLTCHAR *)SQLStmt.c_str(), SQL_NTS)){
+			show_error(SQL_HANDLE_STMT, sqlstatementhandle);
+			goto FINISHED;
+		}
+		
+	FINISHED:
+		SQLFreeHandle(SQL_HANDLE_STMT, sqlstatementhandle );
+		SQLDisconnect(sqlconnectionhandle);
+		SQLFreeHandle(SQL_HANDLE_DBC, sqlconnectionhandle);
+		SQLFreeHandle(SQL_HANDLE_ENV, sqlenvhandle);
+	}
+
 
 };

@@ -15,7 +15,7 @@ int entero();
 void main(){
 
 	int i,flag;//declaracion de variables
-	char op,date[18],text[1024],context[2048];
+	char op,date[22],text[1024],context[2048];
 	patient *patients;
 	int id,count;
 	question _question;
@@ -96,6 +96,7 @@ void main(){
 				int count;
 				count=bd.getCount();
 				_question.setIdQuestion((count+1));
+				bd.newQuestion(_question);
 				getch(); break;
 
 			case '2'://impresion de preguntas
