@@ -102,7 +102,7 @@ void main(){
 					questions=bd.getQuestion();
 					system("cls");
 					cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
-					cout<<"\nID\tTexto de la pregunta\tComentario de la pregunta";
+					cout<<"\nID\tTexto de la pregunta";
 					
 					for(i=0;i<count;i++){
 						
@@ -110,7 +110,7 @@ void main(){
 					
 						if((strcmp(answer,questions->getAnswer())!=0) && (patients->getId()==questions->getIdPatient())){
 					
-							cout<<"\n\n"<<questions->getIdQuestion()<<"\t"<<questions->getText()<<"\t"<<questions->getComent();
+							cout<<"\n\n"<<questions->getIdQuestion()<<"\t"<<questions->getText();
 						}
 						questions++;
 					}
@@ -145,6 +145,7 @@ void main(){
 						cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
 						cout<<"\n\nLa pregunta fue: "<<questions->getText();
 						cout<<"\nLa respuesta es: "<<questions->getAnswer();
+						cout<<"\nEl comentario de la pregunta es: "<<questions->getComent();
 						cout<<"\nDesea ver otra pregunta (s/n): ";
 						cin>>(cOp);
 
@@ -199,4 +200,3 @@ int entero()
 	return entero;
 
 }
-

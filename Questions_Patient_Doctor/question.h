@@ -107,4 +107,4 @@ class question{
 		char *getComent(){
 			return comment;
 		}
-}
+};
