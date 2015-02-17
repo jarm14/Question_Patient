@@ -3,6 +3,7 @@
 #include "question.h"
 #include "conexion_db.h"
 #include "test.h"
+#include "update.h"
 #include <time.h>
 #include <string.h>
 
@@ -21,6 +22,8 @@ void main(){
 
 	do{
 		//testing
+		update u;
+		u.answerQuestion();
 		//current_date();
 		//test aux;
 		//aux.newQuestion();

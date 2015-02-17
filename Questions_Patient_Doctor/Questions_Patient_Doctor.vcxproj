@@ -82,6 +82,7 @@
     <ClInclude Include="patient.h" />
     <ClInclude Include="question.h" />
     <ClInclude Include="test.h" />
+    <ClInclude Include="update.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
