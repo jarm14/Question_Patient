@@ -2,8 +2,6 @@
 #include "patient.h"
 #include "question.h"
 #include "conexion_db.h"
-#include "test.h"
-#include "update.h"
 #include <time.h>
 #include <string.h>
 
@@ -21,13 +19,7 @@ void main(){
 	question _question;
 
 	do{
-		//testing
-		update u;
-		u.answerQuestion();
-		//current_date();
-		//test aux;
-		//aux.newQuestion();
-		//end testing
+		
 		connexion bd;
 		count=bd.getCountPatient();
 		patients=bd.getPatient();
@@ -110,7 +102,7 @@ void main(){
 					questions=bd.getQuestion();
 					system("cls");
 					cout<<"\t\t============PREGUNTAS RESPONDIDAS============";
-					cout<<"\nID\tTexto de la pregunta";
+					cout<<"\nID\tTexto de la pregunta\tComentario de la pregunta";
 					
 					for(i=0;i<count;i++){
 						
@@ -118,7 +110,7 @@ void main(){
 					
 						if((strcmp(answer,questions->getAnswer())!=0) && (patients->getId()==questions->getIdPatient())){
 					
-							cout<<"\n\n"<<questions->getIdQuestion()<<"\t"<<questions->getText();
+							cout<<"\n\n"<<questions->getIdQuestion()<<"\t"<<questions->getText()<<"\t"<<questions->getComent();
 						}
 						questions++;
 					}
